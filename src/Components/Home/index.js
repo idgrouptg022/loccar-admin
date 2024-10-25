@@ -10,7 +10,6 @@ import Car from '../Cars/Car'
 import CreateCar from '../Cars/Create'
 import Accidents from '../Accidents'
 import Accident from '../Accidents/Accident'
-import CardTypes from '../CardTypes'
 import Owners from '../Owners'
 import CreateOwner from '../Owners/Create'
 import Owner from '../Owners/Owner'
@@ -45,9 +44,6 @@ import Tenants from '../Tenants'
 import Tenant from '../Tenants/Tenant'
 import Rentals from '../Rentals'
 import Rental from '../Rentals/Rental'
-import Categories from '../Categories'
-import Category from '../Categories/Category'
-import CreateCategory from '../Categories/Create'
 import CreateTenant from '../Tenants/CreateTenant'
 import Advertising from '../Advertising'
 
@@ -119,10 +115,6 @@ export default function Home() {
         } else if(params.page.startsWith('accidents')) {
             return (
                 <Accident userRights={administrators[0].rightsId} socket={socket} accident={params.page.substring(10)} />
-            )
-        } else if(params.page === ('card-types')) {
-            return (
-                <CardTypes userRights={administrators[0].rightsId} />
             )
         } else if(params.page === ('owners')) {
             return (
@@ -263,18 +255,6 @@ export default function Home() {
         } else if (params.page.startsWith('rentals-')) {
             return (
                 <Rental rental={params.page.substring(8)} />
-            )
-        } else if (params.page === 'categories') {
-            return (
-                <Categories socket={socket} />
-            )
-        } else if (params.page.startsWith('categories-')) {
-            return (
-                <Category category={params.page.substring(11)} />
-            )
-        } else if (params.page === 'create-category') {
-            return (
-                <CreateCategory />
             )
         } else if (params.page === 'advertising') {
             return (

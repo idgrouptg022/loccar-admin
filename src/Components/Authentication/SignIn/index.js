@@ -61,23 +61,40 @@ export default function SignInSide() {
 
             await axios({
                 method: "post",
-                url: `${process.env.REACT_APP_API_URL}/login`,
+                url: `${process.env.REACT_APP_API_URL}/auth/administrators/login`,
                 data: bodyFormData,
                 headers: { "Content-Type": "multipart/form-data" },
             })
                 .then(function (response) {
                     try {
                         if (response.data?.responseCode === '0') {
-                            localStorage.setItem("email", email)
-                            window.location = "/confirmation-code"
+                            // localStorage.setItem("email", email)
+                            // window.location = "/confirmation-code"
+
+                            console.log(response.data);
+                            
+
+                            localStorage.clear()
+
+                            localStorage.setItem('data', JSON.stringify({
+                                id: response.data.data[0].id,
+                                token: response.data.data[0].token,
+                                lastLogin: response.data.data[0].lastLogin
+                            }))
+                            localStorage.setItem("isLogged", true)
+                            window.location = "/admins"
                         } else {
+                            console.log(response);
+                            
                             setEmailError(true)
                             setEmailErrorText("Unkown error occured. Try again !")
                             setPasswordError(true)
                             setPasswordErrorText("Unkown error occured. Try again !")
                             setIsLoading(false)
                         }
-                    } catch {
+                    } catch (e) {
+                        console.log(e);
+                        
                         setEmailError(true)
                         setEmailErrorText("Unkown error occured. Try again !")
                         setPasswordError(true)
@@ -108,6 +125,9 @@ export default function SignInSide() {
                             break
                     }
                     setIsLoading(false)
+
+                    console.log(error);
+                    
                 })
         }
     }
